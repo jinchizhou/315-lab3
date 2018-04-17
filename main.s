@@ -52,7 +52,7 @@ main:
       cmp     r7, r5
       bne     tadd
       bl      intmul
-      bl      end
+      bl      cont
       
 tadd: ldr     r1, =addi       @ put address of '+' in r1
       ldrb    r5, [r1]        @ load actual character '+'
@@ -61,36 +61,41 @@ tadd: ldr     r1, =addi       @ put address of '+' in r1
       cmp     r7, r5
       bne     tsub
       bl      intadd
-      bl      end
+      bl      cont
       
 tsub: ldr     r1, =subt       @ put address of '-' in r1
       ldrb    r5, [r1]        @ load actual character '-'
+      mov     r0, r4
+      mov     r1, r6
       cmp     r7, r5
       bne     errc
       bl      intsub
-      bl      end
+      bl      cont
+
 
 errc: ldr     r0, printdata+28
       bl      printf
+      bl      end
 
       //ldr     r0, printdata+20
       //bl      printf
-end:  
-      
-      ldr     r0, printdata+24
+cont: mov     r1, r0
+      ldr     r0, printdata+12
       bl      printf
-      pop     {r4-r7, pc}
-      //mov     r0, r2
-      /*bl      printf
+      ldr     r0, printdata+20
+      bl      printf
+      
+
+end:  pop     {r4-r7, pc}
+      /*//mov     r0, r2
+      //bl      printf
       
       /*cmp     r4, r5          @ Compare user's answer to char 'y'
-      bge     main
+      //bge     main
       //cmp     r6, r5
       //bge     main
-      ldr     r0, printdata+12 
-      //mov     r0, r2
-      bl      printf */
-//b       loop            @ branch to appropriate location
+      //ldr     r0, printdata+12 
+      //mov     r0, r2 */
     @ this only works for character scans. You'll need a different
     @ format specifier for scanf for an integer ("%d"), and you'll
     @ need to use the ldr instruction instead of ldrb to load an int.
@@ -117,7 +122,7 @@ string2:
 strop:
       .asciz   "Enter Operation: "
 strre:
-      .asciz   "Result is: %d"
+      .asciz   "Result is: %d\n"
 again:
       .asciz   "Again? "
 mult:
