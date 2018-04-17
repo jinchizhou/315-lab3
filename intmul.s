@@ -1,0 +1,26 @@
+intmult:
+			push {r4-r7}
+			mov r4, r0 // r4 = a
+			mov r5, r1 // r5 = b
+			mov r6, #0 // result
+			// r7 is temp
+while:		cmp r5, #0 //while loop
+			bge end
+			and r7, r5, #1 //if(b & 1 )
+			cmp r7, #1
+			beq intaddfunct
+endwhile:	LSL r4, r4, #1 //a = a << 1
+			LSR r5, r5, #1 //b = b >> 1
+			b while
+
+end:
+			pop{r4-r7} //restore temp registers
+			mov pc, lr //
+
+intaddfunct:
+			mov r0, r6 //mov result into r0 to send to intadd
+			mov r1, r4 //mov a into r1 to send to intadd
+			bl intadd //branch to intadd
+			mov r6, r0 //mov the return val of intadd to result(r6)
+			b endwhile //branch to endwhile
+				
