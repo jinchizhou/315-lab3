@@ -5,6 +5,8 @@
 
     .arch armv6
     .fpu vfp 
+    .text
+    .extern printf
     @ --------------------------------
     .global main
     .global intadd
@@ -17,6 +19,7 @@ main:
     @ if the program should repeat.
     @ To scan a character, and compare it to another, do the following
       
+      push    {r4-r7, lr}
       ldr     r0, printdata
       bl      printf
       //ldr     r0, printdata+4
@@ -41,18 +44,42 @@ main:
       mov     r1, sp
       bl      scanf
       ldrb    r7, [sp]        @ loads actual operand into r7
-
+      
       ldr     r1, =mult       @ put address of '*' in r1
       ldrb    r5, [r1]        @ load actual character '*'
-      cmp     r7, r5
       mov     r0, r4
       mov     r1, r6
-      beq     intadd
+      cmp     r7, r5
+      bne     tadd
+      bl      intmul
+      bl      end
       
+tadd: ldr     r1, =addi       @ put address of '+' in r1
+      ldrb    r5, [r1]        @ load actual character '+'
+      mov     r0, r4
+      mov     r1, r6
+      cmp     r7, r5
+      bne     tsub
+      bl      intadd
+      bl      end
+      
+tsub: ldr     r1, =subt       @ put address of '-' in r1
+      ldrb    r5, [r1]        @ load actual character '-'
+      cmp     r7, r5
+      bne     errc
+      bl      intsub
+      bl      end
+
+errc: ldr     r0, printdata+28
+      bl      printf
+
       //ldr     r0, printdata+20
       //bl      printf
-end:
-
+end:  
+      
+      ldr     r0, printdata+24
+      bl      printf
+      pop     {r4-r7, pc}
       //mov     r0, r2
       /*bl      printf
       
@@ -75,8 +102,14 @@ printdata:
       .word    strre
       .word    again
       .word    plz
+      .word    works
+      .word    errorcheck
+errorcheck:
+      .asciz   "Invalid\tOperation\tEntered."
 plz:
       .asciz   "Finished\n"
+works:
+      .asciz   "This is ending\n"
 string1:
       .asciz   "Enter Number 1: "
 string2:
@@ -84,7 +117,7 @@ string2:
 strop:
       .asciz   "Enter Operation: "
 strre:
-      .asciz   "Result is: "
+      .asciz   "Result is: %d"
 again:
       .asciz   "Again? "
 mult:

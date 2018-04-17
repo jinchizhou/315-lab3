@@ -1,4 +1,10 @@
-intmult:
+   .syntax unified
+
+   .arch armv6
+   .fpu vfp
+
+   .global intmul
+intmul:
 			push {r4-r7}
 			mov r4, r0 // r4 = a
 			mov r5, r1 // r5 = b
@@ -14,7 +20,7 @@ endwhile:	LSL r4, r4, #1 //a = a << 1
 			b while
 
 end:
-			pop{r4-r7} //restore temp registers
+			pop {r4-r7} //restore temp registers
 			mov pc, lr //
 
 intaddfunct:
