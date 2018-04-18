@@ -79,7 +79,8 @@ errc: ldr     r0, printdata+28
 
       //ldr     r0, printdata+20
       //bl      printf
-cont: mov     r1, r0
+cont: mov     r2, r1
+      mov     r1, r0
       ldr     r0, printdata+12
       bl      printf
       ldr     r0, printdata+20
@@ -110,7 +111,7 @@ printdata:
       .word    works
       .word    errorcheck
 errorcheck:
-      .asciz   "Invalid\tOperation\tEntered."
+      .asciz   "Invalid\t \tOperation\tEntered.\n"
 plz:
       .asciz   "Finished\n"
 works:
@@ -122,7 +123,7 @@ string2:
 strop:
       .asciz   "Enter Operation: "
 strre:
-      .asciz   "Result is: %d\n"
+      .asciz   "Result is: %d   %d\n"
 again:
       .asciz   "Again? "
 mult:

@@ -5,14 +5,14 @@
 
    .global intsub
 intsub:
-         push {r0-r5, lr}
+         push {r4-r5, lr}
          mov r4, r0
          mov r5, r1
          sub r1, r0, r1
          ldr r0, printdata
          bl printf
          mov r0, r1
-         pop {r0-r5, pc}
+         pop {r4-r5, pc}
 
 
 printdata:
