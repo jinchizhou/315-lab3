@@ -1,5 +1,5 @@
 intsub:
-		push {r2-r4}
+		push {r2-r4, lr}
 		mov r2, r0 //r2 = x
 		mov r3, r1 //r3 = y
 		mov r4, #0 //r4 = ret
@@ -16,5 +16,5 @@ intsub:
 		mov r1, r3
 		bl intadd
 
-		pop {r2-r4}
+		pop {r2-r4, pc}
 
