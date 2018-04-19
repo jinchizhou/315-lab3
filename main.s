@@ -20,7 +20,8 @@ main:
     @ To scan a character, and compare it to another, do the following
       
       push    {r4-r7, lr}
-      ldr     r0, printdata
+
+res:  ldr     r0, printdata
       bl      printf
       //ldr     r0, printdata+4
       //bl      printf
@@ -78,12 +79,22 @@ errc: ldr     r0, printdata+28
       b      end
 
       
-cont: mov     r1, r0
+cont: mov     r1, r0         @ store return value in r1 to be printed
       ldr     r0, printdata+12
       bl      printf
-      ldr     r0, printdata+20
+      ldr     r0, printdata+16
       bl      printf
       
+      ldr     r0, =scanchar   @ scans the char
+      mov     r1, sp
+      bl      scanf
+      ldrb    r7, [sp]        @ loads actual char into r7
+      
+      ldr     r1, =yes        @ put address of 'y' in r1
+      ldrb    r5, [r1]        @ load actual character 'y'
+      cmp     r7, r5
+      beq     res
+
 
 end:  pop     {r4-r7, pc}
       /*//mov     r0, r2
@@ -131,7 +142,7 @@ subt:
 addi:
       .byte    '+'
 yes:
-    .byte   'y'
+      .byte   'y'
 scandec:
     .asciz  " %d"
 scanchar:
