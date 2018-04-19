@@ -1,37 +1,16 @@
-   .syntax unified
-
-   .arch armv6
-   .fpu vfp
-
-   .global intadd
 intadd:
-         push {r4-r6, lr}
-         mov r4, r0
-         mov r5, r1
-         add r1, r4, r5
-         mov r6, r1                   @ it is necessary to put into another var to return
-         ldr r0, printdata
-         bl printf 
-         //mov r1, #12
-         mov r0, r6
+		push {r2-r4}
+		mov r2, r0 //r2 = x
+		mov r3, r1 //r3 = y
+		mov r4, #0 //r4 = carry
 
-         /*
-         ldr r0, printdata
-         bl printf 
-         mov r4, r1
-         mov r0, r4 */
-         /*mov r1, r0
-         ldr r0, printdata
-         bl printf 
-         mov r0, #5 */
-         pop {r4-r6, pc}
+while:
+		cmp r3, #0
+		beq return
+		and r4, r2, r3
+		eor r2, r2, r3
+		LSL r3, r4, #1
+		b while
 
-
-printdata:
-      .word    results
-
-s1:
-   .asciz      "THis works\n"
-
-results:
-   .asciz      "SUm is %d\n"
+return: pop {r2-r4}
+		mov r0, r2

@@ -1,26 +1,19 @@
-   .syntax unified
-
-   .arch armv6
-   .fpu vfp
-
-   .global intsub
 intsub:
-         push {r4-r6, lr}
-         mov r4, r0
-         mov r5, r1
-         sub r1, r0, r1
-         mov r6, r1
-         ldr r0, printdata
-         bl printf
-         mov r0, r6
-         pop {r4-r6, pc}
+		push {r2-r4}
+		mov r2, r0 //r2 = x
+		mov r3, r1 //r3 = y
+		mov r4, #0 //r4 = ret
 
+		eor r3, r3, #0xFFFFFFFF
 
-printdata:
-      .word    results
+		mov r0, #1
+		mov r1, r3
+		bl intadd
 
-s1:
-   .asciz      "THis works\n"
+		mov r3, r0
+		
+		mov r0, r2
+		mov r1, r3
+		bl intadd
 
-results:
-   .asciz      "DIff is %d\n"
+		pop {r2-r4}
