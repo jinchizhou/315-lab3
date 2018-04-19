@@ -43,7 +43,8 @@ while:		orr r9, r4, r5
 			LSL r6, r6, #1
 			mov r7, #0
 
-			xor r9, r4, r5	
+			b exor
+exorReturn:
 			and r9, r9, #1
 			cmp r9, #1
 			beq setSum
@@ -68,7 +69,10 @@ carryReturn:
 
 exor:
 		and r9, r4, r5
-		
+		mvn r9, r9
+		orr r10, r4, r5
+		and r9, r9, r10
+		b exorReturn
 
 setSum:
 			mov r7, #1
