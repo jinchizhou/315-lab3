@@ -4,7 +4,7 @@ intsub:
 		mov r3, r1 //r3 = y
 		mov r4, #0 //r4 = ret
 
-		eor r3, r3, #0xFFFFFFFF
+		eor r3, r3, #255
 
 		mov r0, #1
 		mov r1, r3
@@ -17,3 +17,4 @@ intsub:
 		bl intadd
 
 		pop {r2-r4}
+
