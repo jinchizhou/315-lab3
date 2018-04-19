@@ -9,9 +9,10 @@ intsub:
          mov r4, r0
          mov r5, r1
          sub r1, r0, r1
+         mov r4, r1
          ldr r0, printdata
          bl printf
-         mov r0, r1
+         mov r0, r4
          pop {r4-r5, pc}
 
 

@@ -75,12 +75,10 @@ tsub: ldr     r1, =subt       @ put address of '-' in r1
 
 errc: ldr     r0, printdata+28
       bl      printf
-      bl      end
+      b      end
 
-      //ldr     r0, printdata+20
-      //bl      printf
-cont: mov     r2, r1
-      mov     r1, r0
+      
+cont: mov     r1, r0
       ldr     r0, printdata+12
       bl      printf
       ldr     r0, printdata+20
@@ -123,7 +121,7 @@ string2:
 strop:
       .asciz   "Enter Operation: "
 strre:
-      .asciz   "Result is: %d   %d\n"
+      .asciz   "Result is: %d\n"
 again:
       .asciz   "Again? "
 mult:
