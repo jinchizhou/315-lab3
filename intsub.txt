@@ -2,6 +2,7 @@ int sub(int x, int y)
 {
     // Iterate till there is no carry
     y = y ^ #0xFFFFFFFF //2's compliment
+    y += 1
     return add(x, y)
 }
 
@@ -12,6 +13,13 @@ intsub:
 		mov r4, #0 //r4 = ret
 
 		eor r3, r3, #0xFFFFFFFF
+
+		mov r0, #1
+		mov r1, r3
+		bl intadd
+
+		mov r3, r0
+		
 		mov r0, r2
 		mov r1, r3
 		bl intadd
