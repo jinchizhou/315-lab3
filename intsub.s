@@ -1,3 +1,6 @@
+
+
+      .global intsub
 intsub:
 		push {r2-r4, lr}
 		mov r2, r0 //r2 = x
