@@ -6,28 +6,64 @@
    .global intmul
 
 intmul:
-			push {r4-r7, lr}
-			mov r4, r0 // r4 = a
-			mov r5, r1 // r5 = b
-			mov r6, #0 // res
+			push {r2-r7, lr}
+			mov r2, r0 // r2 = a
+			mov r3, r1 // r3 = b
+			mov r4, #0 // res
 
+                        mov r6, #0 // r6 represents neg or not
+                        
+                        cmp r2, #0 // check to see if num is negative
+                        bge checksec
+                        mvn r2, r2 // invert
+                        
+                        // call intadd
+                        mov r0, r2
+                        mov r1, #1
+                        bl intadd
+                        mov r2, r0
+                        mvn r6, r6
 
+                        /*mov r1, r2
+                        ldr r0, printdata
+                        bl printf */
 
-                        // r7 is temp
+checksec:               
+
+                        /*mov r1, r2
+                        ldr r0, printdata
+                        bl printf */
+                        
+                        cmp r3, #0
+                        bge while
+                        mvn r3, r3
+
+                        mov r0, r3
+                        mov r1, #1
+                        bl intadd
+                        mov r3, r0
+                        mvn r6, r6
+
+                        /*mov r1, r6
+                        ldr r0, printdata
+                        bl printf  */
+                        
+                        // r5 is temp
 while:	 	        
                         /*mov r1, r5
                         ldr r0, printdata
                         bl printf */
-                        cmp r5, #1 //while loop
+
+                        cmp r3, #1 //while loop
 			blt end
-			and r7, r5, #1 //if(b & 1 )
+			and r5, r3, #1 //if(b & 1 )
 			
-                        cmp r7, #1
+                        cmp r5, #1
 			beq intaddfunct
 
 endwhile:	        
-                        LSL r4, r4, #1 //a = a << 1
-			LSR r5, r5, #1 //b = b >> 1
+                        LSL r2, r2, #1 //a = a << 1
+			LSR r3, r3, #1 //b = b >> 1
                         
                         /*mov r1, r4
                         ldr r0, printdata
@@ -35,22 +71,31 @@ endwhile:
                         mov r1, r5
                         ldr r0, printdata
                         bl printf
-			pop {r4-r7, pc} //restore temp registers
+			pop {r2-r7, pc} //restore temp registers
 			*/
                         
                         b while
 
-end:                 
-                        mov r0, r6
-			pop {r4-r7, pc} //restore temp registers
+end:                    
+                        cmp r6, #0
+                        beq done
+                        
+                        mvn r4, r4
+                        mov r0, r4
+                        mov r1, #1
+                        bl intadd
+                        mov r4, r0
+
+done:                   mov r0, r4
+			pop {r2-r7, pc} //restore temp registers
 
 intaddfunct:            
-			mov r0, r6 //mov result into r0 to send to intadd
-		        mov r1, r4 //mov a into r1 to send to intadd
+			mov r0, r4 //mov result into r0 to send to intadd
+		        mov r1, r2 //mov a into r1 to send to intadd
                         
                         bl intadd //branch to intadd
 			
-                        mov r6, r0 //mov the return val of intadd to result(r6)
+                        mov r4, r0 //mov the return val of intadd to result(r6)
 			
                         /*mov r1, r6
                         ldr r0, printdata
@@ -65,7 +110,7 @@ intaddfunct:
                         ldr r0, printdata
                         bl printf
 			pop {r4-r7, pc} //restore temp registers
-*/
+                        */
                         
                         b endwhile //branch to endwhile
 			

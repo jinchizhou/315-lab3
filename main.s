@@ -76,13 +76,13 @@ tsub: ldr     r1, =subt       @ put address of '-' in r1
 
 errc: ldr     r0, printdata+28
       bl      printf
-      b      end
-
+      b       ag
       
 cont: mov     r1, r0         @ store return value in r1 to be printed
       ldr     r0, printdata+12
       bl      printf
-      ldr     r0, printdata+16
+
+ag:   ldr     r0, printdata+16
       bl      printf
       
       ldr     r0, =scanchar   @ scans the char
