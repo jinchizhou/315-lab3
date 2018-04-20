@@ -65,14 +65,6 @@ endwhile:
                         LSL r2, r2, #1 //a = a << 1
 			LSR r3, r3, #1 //b = b >> 1
                         
-                        /*mov r1, r4
-                        ldr r0, printdata
-                        bl printf
-                        mov r1, r5
-                        ldr r0, printdata
-                        bl printf
-			pop {r2-r7, pc} //restore temp registers
-			*/
                         
                         b while
 
@@ -97,26 +89,11 @@ intaddfunct:
 			
                         mov r4, r0 //mov the return val of intadd to result(r6)
 			
-                        /*mov r1, r6
-                        ldr r0, printdata
-                        bl printf
-			pop {r4-r7, pc} //restore temp registers
-                        */
-                        
-                        /*mov r1, r4
-                        ldr r0, printdata
-                        bl printf
-                        mov r1, r5
-                        ldr r0, printdata
-                        bl printf
-			pop {r4-r7, pc} //restore temp registers
-                        */
                         
                         b endwhile //branch to endwhile
 			
 printdata:
       .word  st1
-      //.word  st2
 st1:
       .asciz  "RET is %d\n"
 

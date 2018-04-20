@@ -1,7 +1,7 @@
     .syntax unified
 
     @ Template file for Lab 3
-    @ Kyle Chin, Jinchi Zhou
+    @ Kyle Chin, Jinchi Zhou, Daniel Wong
 
     .arch armv6
     .fpu vfp 
@@ -74,7 +74,7 @@ tsub: ldr     r1, =subt       @ put address of '-' in r1
       bl      cont
 
 
-errc: ldr     r0, printdata+28
+errc: ldr     r0, printdata+28  // error check if user used improper 
       bl      printf
       b       ag
       
@@ -82,7 +82,7 @@ cont: mov     r1, r0         @ store return value in r1 to be printed
       ldr     r0, printdata+12
       bl      printf
 
-ag:   ldr     r0, printdata+16
+ag:   ldr     r0, printdata+16  // prompt to go again
       bl      printf
       
       ldr     r0, =scanchar   @ scans the char
