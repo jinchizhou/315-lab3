@@ -7,15 +7,14 @@ intsub:
 		mov r3, r1 //r3 = y
 		mov r4, #0 //r4 = ret
 
-		eor r3, r3, #255
-
+twosc:		eor r3, r3, #255
 		mov r0, #1
 		mov r1, r3
 		bl intadd
 
-		mov r3, r0
+		mov r3, r0     // new y
 		
-		mov r0, r2
+		mov r0, r2     // add again
 		mov r1, r3
 		bl intadd
 
