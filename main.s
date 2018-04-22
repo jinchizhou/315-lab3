@@ -1,7 +1,7 @@
     .syntax unified
 
     @ Template file for Lab 3
-    @ Kyle Chin, Jinchi Zhou, Daniel Wong
+    @ Kyle Chin, Jinchi Zhou
 
     .arch armv6
     .fpu vfp 
